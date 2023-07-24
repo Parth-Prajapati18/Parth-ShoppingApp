@@ -3,6 +3,7 @@ import Image from "next/image"
 import { CgProfile, CgHeart, CgSearch, CgShoppingCart, CgLogIn, CgUserAdd } from "react-icons/cg"
 import { RxHamburgerMenu } from "react-icons/rx"
 import { useState, useEffect, useRef } from "react"
+import Link from 'next/link'
 
 function Navbar() {
 
@@ -55,7 +56,7 @@ function Navbar() {
 
             {/* Phone screen Sidebar - Start */}
             <div
-                className={`md:hidden fixed top-0 right-0 bottom-0 left-0 bg-white z-[101] transition-transform ${isSidebarOpen ? "transform translate-x-0" : "transform translate-x-full"
+                className={`md:hidden fixed top-0 right-0 bottom-0 left-0 w-screen h-screen bg-white z-[101] transition-transform ${isSidebarOpen ? "transform translate-x-0" : "hidden"
                     }`}
             >
                 <button
@@ -70,7 +71,7 @@ function Navbar() {
                     <div className="h-px bg-gray-100 w-full"></div>
                     <button className="w-full hover:text-teal-500 text-primary" href="/">Shop</button>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/">Blog</button>
+                    <button className="w-full hover:text-teal-500 text-primary" href="/">Consultation</button>
                     <div className="h-px bg-gray-100 w-full"></div>
                     <button className="w-full hover:text-teal-500 text-primary" href="/">Profile</button>
                     <div className="h-px bg-gray-100 w-full"></div>
@@ -90,18 +91,15 @@ function Navbar() {
 
             <div>
                 {/* Left side Three Links - Start */}
-                <div className="md:grid grid-cols-4 gap-3 items-center text-center mx-auto font-normal font-base hidden tracking-[0.04em] py-4">
-                    <a className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
-                        href="/">Home</a>
+                <div className="md:grid grid-cols-3 gap-3 items-center text-center mx-auto font-normal font-base hidden tracking-[0.04em] py-4">
+                    <Link className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
+                        href="/">Home</Link>
 
-                    <a className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
-                        href="/">Shop</a>
+                    <Link  className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
+                        href="/">Shop</Link>
 
-                    <a className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
-                        href="/">Blog</a>
-
-                    <a className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
-                        href="/">Contact Us</a>
+                    <Link  className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
+                        href="/">Consultation</Link>
                 </div>
                 {/* Left side Three Links - End */}
             </div>
@@ -135,9 +133,9 @@ function Navbar() {
                         )}
                     </div>
 
-                    <a className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist"><CgHeart /></a>
-                    <a className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="CgSearch"><CgSearch /></a>
-                    <a className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist"><CgShoppingCart /></a>
+                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist" href="/"><CgHeart /></Link>
+                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="CgSearch" href="/"><CgSearch /></Link>
+                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist"href="/"><CgShoppingCart /></Link>
                 </div>
             </div>
 
