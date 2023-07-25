@@ -1,7 +1,9 @@
 import Link from "next/link"
+import Trending from "./components/Trending/page"
 
 function Home() {
   return (
+    <div>
     <div className="flex flex-col-reverse md:flex-row items-center justify-center h-auto overflow-hidden" style={{ backgroundColor: '#e2e9e9' }}>
       <div className="md:w-3/5 p-4 md:pl-48 text-center md:text-left">
         <h2 className="text-sm md:text-2xl font-bold text-slate-500 capitalize my-1 md:my-3">
@@ -10,7 +12,7 @@ function Home() {
         <h2 className="text-lg md:text-2xl uppercase font-light my-2 md:my-4">
           Create Your own
         </h2>
-        <h1 className="text-3xl md:text-5xl font-medium uppercase my-3 md:my-5">Engagement Rings</h1>
+        <h1 className="text-3xl md:text-5xl font-medium uppercase my-3 md:my-5 font-Victor+Mono">Engagement Rings</h1>
         <h3 className="text-sm md:text-xl font-normal my-2 md:my-3">Tired Of Virtual Inventories?<Link className="font-bold mx-1 underline uppercase" href='/'>Visit Store</Link></h3>
 
         <ul className=" md:list-disc text-sm md:text-lg md:list-inside my-4">
@@ -36,7 +38,15 @@ function Home() {
           Your browser does not support the video tag.
         </video>
       </div>
+    </div>
 
+
+
+    {/* New Arrivals Products */}
+    <h2 className='py-4 text-3xl md:text-4xl text-center' style={{ backgroundColor: '#e2e9e9' }}>
+        Trending Now
+    </h2>
+    <Trending />
     </div>
   )
 }
