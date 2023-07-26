@@ -42,11 +42,14 @@ function Home() {
 
 
 
-    {/* New Arrivals Products */}
+    {/* New Arrivals Products - Start */}
     <h2 className='py-4 text-3xl md:text-4xl text-center' style={{ backgroundColor: '#e2e9e9' }}>
         Trending Now
     </h2>
     <Trending />
+    {/* New Arrivals Products - End */}
+
+
     </div>
   )
 }
