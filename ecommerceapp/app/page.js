@@ -20,7 +20,7 @@ function Home() {
           <li>1000's of IN STOCK Ring Styles</li>
         </ul>
 
-        <p className="text-sm">
+        <p className="text-sm text-justify md:text-left">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
           scelerisque euismod elit, vel efficitur nisi tempor in. Nulla eget
           nisi tortor. Sed in convallis nisi. Integer ut sem sed purus vehicula
@@ -43,7 +43,7 @@ function Home() {
 
 
     {/* New Arrivals Products - Start */}
-    <h2 className='py-4 text-3xl md:text-4xl text-center' style={{ backgroundColor: '#e2e9e9' }}>
+    <h2 className='pt-16 pb-4 text-3xl md:text-4xl text-center' style={{ backgroundColor: '#e2e9e9' }}>
         Trending Now
     </h2>
     <Trending />
