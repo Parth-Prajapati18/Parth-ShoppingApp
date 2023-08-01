@@ -69,7 +69,7 @@ function Navbar() {
                 <div className="relative grid grid-rows-7 gap-2 text-lg top-20 px-[7%] font-base font-semibold tracking-[0.04em]">
                     <button className="w-full hover:text-teal-500 text-primary" href="/">Home</button>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/">Shop</button>
+                    <button className="w-full hover:text-teal-500 text-primary" href="/shop">Shop</button>
                     <div className="h-px bg-gray-100 w-full"></div>
                     <button className="w-full hover:text-teal-500 text-primary" href="/">Consultation</button>
                     <div className="h-px bg-gray-100 w-full"></div>
@@ -96,7 +96,7 @@ function Navbar() {
                         href="/">Home</Link>
 
                     <Link  className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
-                        href="/">Shop</Link>
+                        href="/shop">Shop</Link>
 
                     <Link  className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
                         href="/">Consultation</Link>
