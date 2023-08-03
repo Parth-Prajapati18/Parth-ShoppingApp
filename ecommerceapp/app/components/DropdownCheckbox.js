@@ -45,12 +45,12 @@ export default function DropdownCheckbox({ DropTitle, items, selectedItems, onCh
     <div ref={dropdownRef} className='relative'>
       <div
         type='button'
-        className={`w-auto flex justify-between mx-2 py-2 pl-3 pr-10 text-left ${selectedItems.length > 0 ? 'bg-blue-200 border-blue-300 text-blue-500 font-normal' : 'bg-white border'
+        className={`w-1/3 md:w-1/6 flex justify-between  mx-2 py-2 px-3 md:pr-10 text-left ${selectedItems.length > 0 ? 'bg-blue-100 border-blue-200 text-blue-800 font-normal' : 'bg-white border'
           } border shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
         onClick={handleToggle}
       >
         <div>
-          {selectedItems.length === 0 ? DropTitle : `${selectedItems[0]}${selectedItems.length > 1 ? `+${selectedItems.length - 1}` : ''}`}
+          {selectedItems.length === 0 ? DropTitle : `${selectedItems[0]}${selectedItems.length > 1 ? ` +${selectedItems.length - 1}` : ''}`}
         </div>
 
         <div>
@@ -59,7 +59,7 @@ export default function DropdownCheckbox({ DropTitle, items, selectedItems, onCh
           )}
 
           {isOpen ? (
-            <AiOutlineUp className={`${selectedItems.length > 0 ? 'hidden' : ''}`} />
+            <AiOutlineUp className={ ` ${selectedItems.length > 0 ? 'hidden' : ''}`} />
            
           ) : (
             <AiOutlineDown className={`${selectedItems.length > 0 ? 'hidden' : ''}`} /> 
@@ -70,7 +70,7 @@ export default function DropdownCheckbox({ DropTitle, items, selectedItems, onCh
       </div>
 
       {isOpen && (
-        <div className='absolute w-full mt-2 bg-white border border-blue-300 shadow-md'>
+        <div className='absolute mx-2 w-1/3 md:w-1/6 mt-0.5 bg-white border border-blue-300 shadow-md'>
           {items.map((item) => (
             <label key={item} className='block p-2 cursor-pointer'>
               <input
