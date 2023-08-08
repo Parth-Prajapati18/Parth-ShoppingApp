@@ -1,7 +1,8 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react'
-import { AiOutlineDown, AiOutlineUp, AiFillCloseCircle, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineDown, AiOutlineUp, AiFillCloseCircle, AiOutlineSearch, AiOutlineHeart } from 'react-icons/ai';
 import products from './data'
+import Link from 'next/link';
 
 export default function Shop() {
 
@@ -14,9 +15,9 @@ export default function Shop() {
   const [selectedColor, setSelectedColor] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState([]);
 
-  const uniqueCompanies = ['All Brands', 1, 3, ...new Set(products.map((product) => product.company))];
-  const uniqueMaterial = ['All Materail', 1, 3, ...new Set(products.map((product) => product.material))];
-  const uniqueColor = ['All Colors', 1, 3, ...new Set(products.map((product) => product.color))];
+  const uniqueCompanies = [...new Set(products.map((product) => product.company))];
+  const uniqueMaterial = [...new Set(products.map((product) => product.material))];
+  const uniqueColor = [...new Set(products.map((product) => product.color))];
 
   // Handle changing the sort order
   const handleSortOrderChange = (event) => {
@@ -48,6 +49,24 @@ export default function Shop() {
     console.log({ selectedMaterial });
   };
 
+  //Filter products based on selected filters
+
+  const filteredProducts = products.filter(product => {
+    const matchesCompany = selectedComapany.length === 0 || selectedComapany.includes(product.company);
+    const matchesColor = selectedColor.length === 0 || selectedColor.includes(product.color);
+    const matchesMaterial = selectedMaterial.length === 0 || selectedMaterial.includes(product.material);
+    return matchesCompany && matchesColor && matchesMaterial;
+  });
+
+  // Sort filtered products based on sort order
+  const sortedProducts = [...filteredProducts].sort((a,b) => {
+    if (sortOrder === 'asc') {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
+  });
+
   return (
     <div>
 
@@ -60,7 +79,7 @@ export default function Shop() {
       {/* Filter and search Start */}
       <div className='flex flex-col items-center focus:border-blue-300'>
         {/* Search Bar */}
-        <div className='flex items-center w-1/2 m-2'>
+        <div className='flex items-center md:w-1/2 m-2'>
           <input
             type='text'
             placeholder='Search by Product Name...'
@@ -74,7 +93,7 @@ export default function Shop() {
 
         {/* Filter Three tabs   */}
 
-        <div className='flex'>
+        <div className='flex gap-3 flex-col md:flex-row'>
 
           {/* Dropdown checkbox for Color */}
           <div>
@@ -92,7 +111,7 @@ export default function Shop() {
             {isOpenColor ? <AiOutlineUp /> : <AiOutlineDown />}
           </div>
           {/* Drop down for Color */}
-          <div className='absolute bg-white border'>
+          <div className='absolute bg-white border z-20'>
             {isOpenColor && uniqueColor.map((item) => (
               <label key={item} className='block py-1 px-5 cursor-pointer'>
                 <input
@@ -123,7 +142,7 @@ export default function Shop() {
             {isOpenMate ? <AiOutlineUp /> : <AiOutlineDown />}
           </div>
           {/* Drop down for Material */}
-          <div className='absolute bg-white border'>
+          <div className='absolute bg-white border z-20'>
             {isOpenMate && uniqueMaterial.map((item) => (
               <label key={item} className='block py-1 px-5 cursor-pointer'>
                 <input
@@ -155,7 +174,7 @@ export default function Shop() {
             {isOpenComp ? <AiOutlineUp /> : <AiOutlineDown />}
           </div>
           {/* Drop down*/}
-          <div className='absolute bg-white border'>
+          <div className='absolute bg-white border z-20'>
             {isOpenComp && uniqueCompanies.map((item) => (
               <label key={item} className='block py-1 px-5 cursor-pointer'>
                 <input
@@ -187,8 +206,32 @@ export default function Shop() {
 
         </div>
         {/* Filter Three tabs End*/}
+
       </div>
       {/* Filter and search End */}
+
+      {/* Products */}
+      <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 m-6'>
+        {sortedProducts.map(product => (
+          <div key={product.id} className='border p-4'>
+            <div className='flex justify-between text-lg'>
+            <h3 className='font-semibold p-2'>{product.company} - {product.productName}</h3>
+            <AiOutlineHeart className='mt-2.5' />
+            </div>
+            <Link href={`/productDecp/${product.id}`} className='hover:underline'>
+              <div className='aspect-w-3 aspect-h-4'>
+                <img
+                src={product.src}
+                alt={product.productName}
+                className='object-cover w-full h-full hover:scale-105'
+                />
+              </div>
+              <p className='font-medium py-2 '>{product.shortDescription}</p>
+            </Link>
+            <p className='text-gray-600 py-1'>Price: ${product.price}</p>
+          </div>
+        ))}
+      </div>
 
     </div>
   )
