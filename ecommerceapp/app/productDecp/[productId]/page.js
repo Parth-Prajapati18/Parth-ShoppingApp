@@ -5,12 +5,12 @@ import React, { useState, useContext } from 'react';
 import products from '../../shop/data';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AiOutlineHeart,AiFillHeart, AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart, AiOutlineArrowRight } from 'react-icons/ai';
 import { globalContext } from '@/app/globals/context'
 
 const ProductDetail = ({ params }) => {
 
-  const {wishList, addToWishList, removeToWishList} = useContext(globalContext);
+  const { wishList, addToWishList, removeToWishList, addToCart, removeToCart, cartAry } = useContext(globalContext);
   const product = products.find(p => p.id == params.productId);
 
   if (!product) {
@@ -49,38 +49,47 @@ const ProductDetail = ({ params }) => {
 
 
 
-      <div className='lg:w-1/4 pt-4 md:pt-8 mx-4 md:mx-8 xl:mx-16 '>
-        <p className='text-gray-800 mb-4 text-2xl'>{product.shortDescription}</p>
-        <ul className='pl-4 md:pl-0 xl:pl-6 space-y-2'>
-          {['Company', 'Style', 'Weight', 'Color', 'Material'].map(attribute => (
-            <li key={attribute} className='flex items-start'>
-              <span className='font-semibold mr-2'>{attribute}:</span>
-              {product[attribute.toLowerCase()]}
-            </li>
-          ))}
-        </ul>
+        <div className='lg:w-1/4 pt-4 md:pt-8 mx-4 md:mx-8 xl:mx-16 '>
+          <p className='text-gray-800 mb-4 text-2xl'>{product.shortDescription}</p>
+          <ul className='pl-4 md:pl-0 xl:pl-6 space-y-2'>
+            {['Company', 'Style', 'Weight', 'Color', 'Material'].map(attribute => (
+              <li key={attribute} className='flex items-start'>
+                <span className='font-semibold mr-2'>{attribute}:</span>
+                {product[attribute.toLowerCase()]}
+              </li>
+            ))}
+          </ul>
 
-        <div className='flex flex-col gap-2 mt-8'>
-          <span className='px-4 py-2 bg-white font-semibold border border-black text-center'>$ {product.price.toFixed(2)}</span>
-          {
-            wishList.includes(product.id) ?
-            <button className='px-4 py-2 bg-black font-normal italic text-white border text-center' onClick={() => removeToWishList(product.id)}>
-              Remove from Wishlist
+          <div className='flex flex-col gap-2 mt-8'>
+            <span className='px-4 py-2 bg-white font-semibold border border-black text-center'>$ {product.price.toFixed(2)}</span>
+            {
+              wishList.includes(product.id) ?
+                <button className='px-4 py-2 bg-black font-normal italic text-white border text-center' onClick={() => removeToWishList(product.id)}>
+                  Remove from Wishlist
+                </button>
+                :
+                <button className='px-4 py-2 bg-black font-semibold text-white border text-center' onClick={() => addToWishList(product.id)}>
+                  Add to Wishlist
+                </button>
+
+            }
+            
+            {
+              cartAry.includes(product.id) ?
+                <button className='px-4 py-2 bg-black italic font-semibold text-white border' onClick={() => removeToCart(product.id)}>
+                  Remove from Cart
+                </button>
+                :
+                <button className='px-4 py-2 bg-black font-semibold text-white border' onClick={() => addToCart(product.id)}>
+                  Add to Cart
+                </button>
+            }
+
+            <button className='px-4 py-2 bg-white font-semibold border border-black'>
+              Schedule An Appointment (Consultation)
             </button>
-            :
-          <button className='px-4 py-2 bg-black font-semibold text-white border text-center' onClick={() => addToWishList(product.id)}>
-            Add to Wishlist
-          </button>
-
-          }
-          <button className='px-4 py-2 bg-black font-semibold text-white border'>
-            Add to Cart
-          </button>
-          <button className='px-4 py-2 bg-white font-semibold border border-black'>
-            Schedule An Appointment (Consultation)
-          </button>
+          </div>
         </div>
-      </div>
 
       </div>
 
@@ -93,11 +102,11 @@ const ProductDetail = ({ params }) => {
               <div className='flex justify-between text-lg'>
                 <h3 className='font-semibold p-2'>{relatedProduct.company} - {relatedProduct.productName}</h3>
                 {
-              wishList.includes(relatedProduct.id) ?
-              <AiFillHeart className='mt-2.5 fill-red-500 text-2xl' onClick={() => removeToWishList(relatedProduct.id)}/>
-              :
-              <AiOutlineHeart className='mt-2.5 text-2xl' onClick={() => addToWishList(relatedProduct.id)  } />
-            }
+                  wishList.includes(relatedProduct.id) ?
+                    <AiFillHeart className='mt-2.5 fill-red-500 text-2xl' onClick={() => removeToWishList(relatedProduct.id)} />
+                    :
+                    <AiOutlineHeart className='mt-2.5 text-2xl' onClick={() => addToWishList(relatedProduct.id)} />
+                }
               </div>
               <Link href={`/productDecp/${relatedProduct.id}`} className='hover:underline'>
                 <div className='aspect-w-3 aspect-h-4'>

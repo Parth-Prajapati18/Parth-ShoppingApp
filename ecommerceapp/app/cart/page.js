@@ -1,0 +1,141 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
+'use client'
+import { globalContext } from '@/app/globals/context';
+import products from '../shop/data';
+import { useContext } from 'react';
+import Link from 'next/link';
+import { AiOutlineHeart, AiFillHeart, AiOutlineArrowRight } from 'react-icons/ai';
+
+
+function cart() {
+    const { wishList, addToWishList, removeToWishList, removeToCart, cartAry, removeAllCart } = useContext(globalContext);
+
+    if (cartAry.length === 0) {
+        return (
+            <div>
+                <h2 className='my-3 mx-1 md:mt-8 md:mb-3 text-lg md:text-3xl font-medium uppercase text-center font-mono overflow-hidden'>
+                    Your cart is empty
+                </h2>
+
+                <div className='px-4 md:px-16 mt-8'>
+                    <h1 className='text-2xl md:text-3xl font-semibold mb-1 mt-2'>You may like this </h1>
+                    <div className='grid md:grid-cols-3 xl:grid-cols-5 mt-4 gap-4'>
+                        {products.slice(0, 4).map(relatedProduct => (
+                            <div key={relatedProduct.id} className='border p-4'>
+                                <div className='flex justify-between text-lg'>
+                                    <h3 className='font-semibold p-2'>{relatedProduct.company} - {relatedProduct.productName}</h3>
+                                    {
+                                        wishList.includes(relatedProduct.id) ?
+                                            <AiFillHeart className='mt-2.5 fill-red-500 text-2xl' onClick={() => removeToWishList(relatedProduct.id)} />
+                                            :
+                                            <AiOutlineHeart className='mt-2.5 text-2xl' onClick={() => addToWishList(relatedProduct.id)} />
+                                    }
+                                </div>
+                                <Link href={`/productDecp/${relatedProduct.id}`} className='hover:underline'>
+                                    <div className='aspect-w-3 aspect-h-4'>
+                                        <img
+                                            src={relatedProduct.src}
+                                            alt={relatedProduct.productName}
+                                            className='object-cover w-full h-full hover:scale-105'
+                                        />
+                                    </div>
+                                    <p className='font-medium py-2 '>{relatedProduct.shortDescription}</p>
+                                </Link>
+                                <p className='text-gray-600 py-1'>Price: ${relatedProduct.price}</p>
+                            </div>
+                        ))}
+                        <div className='flex items-center justify-left px-16'>
+                            <Link href='/shop' className='text-2xl hover:text-blue-700 hover:scale-110 flex flex-row'>
+                                View All <AiOutlineArrowRight />
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        )
+    }
+
+    const calculateTotal = () => {
+        let total = 0;
+        cartAry.forEach(cartItem => {
+            const product = products.find(p => p.id === cartItem);
+            total += product.price;
+        });
+        return total;
+    };
+
+    const calculateTax = total => {
+        const taxRate = 0.13; // 13%
+        return total * taxRate;
+    };
+
+    const placeOrder = () => {
+        // Implement your logic to place an order
+        console.log('Placing order...');
+    };
+
+
+    return (
+        <div className='px-4 md:px-16 mt-8'>
+            <h2 className='text-2xl md:text-3xl font-semibold mb-1 mt-2'>Your Cart</h2>
+            <div className='grid md:grid-cols-1 mt-4 gap-4'>
+                {cartAry.map(cartItem => {
+                    const product = products.find(p => p.id === cartItem);
+                    return (
+                        <div key={product.id} className='border p-4'>
+                            <div className='flex justify-between items-center'>
+                                <div className='flex items-center'>
+                                    <img
+                                        src='/assets/jewellery.jpeg'
+                                        alt='Img 1'
+                                        className='object-cover w-16 h-16 mr-4'
+                                    />
+                                    <h3 className='font-semibold'>{product.productName}</h3>
+                                </div>
+                                <button
+                                    className='mt-2.5 text-2xl'
+                                    onClick={() => removeToCart(cartItem.id)}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                            <p className='text-gray-600 py-1'>Price: ${product.price}</p>
+                            {/* Display other cart item details like quantity */}
+                            {/* ... */}
+                        </div>
+                    );
+                })}
+            </div>
+            <div className='mt-6'>
+                <div className='flex justify-between'>
+                    <p className='font-semibold'>Subtotal:</p>
+                    <p>${calculateTotal().toFixed(2)}</p>
+                </div>
+                <div className='flex justify-between'>
+                    <p className='font-semibold'>Tax (13%):</p>
+                    <p>${calculateTax(calculateTotal()).toFixed(2)}</p>
+                </div>
+                <div className='flex justify-between mt-2'>
+                    <p className='font-semibold'>Total:</p>
+                    <p>${(calculateTotal() + calculateTax(calculateTotal())).toFixed(2)}</p>
+                </div>
+                <button
+                    className='mt-6 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'
+                    onClick={placeOrder}
+                >
+                    Place Order
+                </button>
+            </div>
+            <div className='flex items-center justify-left px-16 mt-4'>
+                <Link href='/shop' className='text-2xl hover:text-blue-700 hover:scale-110 flex flex-row'>
+                    Continue Shopping <AiOutlineArrowRight />
+                </Link>
+            </div>
+        </div>
+    );
+}
+
+export default cart
