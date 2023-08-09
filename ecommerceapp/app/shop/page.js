@@ -1,11 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
-import React, { useState, useEffect, useRef } from 'react'
-import { AiOutlineDown, AiOutlineUp, AiFillCloseCircle, AiOutlineSearch, AiOutlineHeart } from 'react-icons/ai';
+import React, { useState, useContext  } from 'react'
+import { AiOutlineDown, AiOutlineUp, AiOutlineSearch, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import products from './data'
 import Link from 'next/link';
+import {globalContext} from '@/app/globals/context.js' 
+
 
 export default function Shop() {
 
+  const { wishList, addToWishList, removeToWishList } = useContext(globalContext);
   const [isOpenComp, setIsOpenComp] = useState(false);
   const [isOpenColor, setIsOpenColor] = useState(false);
   const [isOpenMate, setIsOpenMate] = useState(false);
@@ -66,6 +70,8 @@ export default function Shop() {
       return b.price - a.price;
     }
   });
+
+  console.log({wishList})
 
   return (
     <div>
@@ -216,7 +222,12 @@ export default function Shop() {
           <div key={product.id} className='border p-4'>
             <div className='flex justify-between text-lg'>
             <h3 className='font-semibold p-2'>{product.company} - {product.productName}</h3>
-            <AiOutlineHeart className='mt-2.5' />
+            {
+              wishList.includes(product.id) ?
+              <AiFillHeart className='mt-2.5 fill-red-500 text-2xl' onClick={() => removeToWishList(product.id)}/>
+              :
+              <AiOutlineHeart className='mt-2.5 text-2xl' onClick={() => addToWishList(product.id)  } />
+            }
             </div>
             <Link href={`/productDecp/${product.id}`} className='hover:underline'>
               <div className='aspect-w-3 aspect-h-4'>

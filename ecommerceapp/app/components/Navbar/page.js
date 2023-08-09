@@ -75,7 +75,7 @@ function Navbar() {
                     <div className="h-px bg-gray-100 w-full"></div>
                     <button className="w-full hover:text-teal-500 text-primary" href="/">Profile</button>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/">Wishlist</button>
+                    <button className="w-full hover:text-teal-500 text-primary" href="/wishlist">Wishlist</button>
                     <div className="h-px bg-gray-100 w-full"></div>
                     <button className="w-full hover:text-teal-500 text-primary" href="/">Cart</button>
                     <div className="h-px bg-gray-100 w-full"></div>
@@ -133,7 +133,7 @@ function Navbar() {
                         )}
                     </div>
 
-                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist" href="/"><CgHeart /></Link>
+                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist" href="/wishlist"><CgHeart /></Link>
                     <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="CgSearch" href="/"><CgSearch /></Link>
                     <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist"href="/"><CgShoppingCart /></Link>
                 </div>

@@ -1,13 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import products from '../../shop/data';
 import Image from 'next/image';
 import Link from 'next/link';
-import { AiOutlineHeart, AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlineHeart,AiFillHeart, AiOutlineArrowRight } from 'react-icons/ai';
+import { globalContext } from '@/app/globals/context'
 
 const ProductDetail = ({ params }) => {
+
+  const {wishList, addToWishList, removeToWishList} = useContext(globalContext);
   const product = products.find(p => p.id == params.productId);
 
   if (!product) {
@@ -59,9 +62,17 @@ const ProductDetail = ({ params }) => {
 
         <div className='flex flex-col gap-2 mt-8'>
           <span className='px-4 py-2 bg-white font-semibold border border-black text-center'>$ {product.price.toFixed(2)}</span>
-          <button className='px-4 py-2 bg-black font-semibold text-white border text-center'>
+          {
+            wishList.includes(product.id) ?
+            <button className='px-4 py-2 bg-black font-normal italic text-white border text-center' onClick={() => removeToWishList(product.id)}>
+              Remove from Wishlist
+            </button>
+            :
+          <button className='px-4 py-2 bg-black font-semibold text-white border text-center' onClick={() => addToWishList(product.id)}>
             Add to Wishlist
           </button>
+
+          }
           <button className='px-4 py-2 bg-black font-semibold text-white border'>
             Add to Cart
           </button>
@@ -81,7 +92,12 @@ const ProductDetail = ({ params }) => {
             <div key={relatedProduct.id} className='border p-4'>
               <div className='flex justify-between text-lg'>
                 <h3 className='font-semibold p-2'>{relatedProduct.company} - {relatedProduct.productName}</h3>
-                <AiOutlineHeart className='mt-2.5' />
+                {
+              wishList.includes(relatedProduct.id) ?
+              <AiFillHeart className='mt-2.5 fill-red-500 text-2xl' onClick={() => removeToWishList(relatedProduct.id)}/>
+              :
+              <AiOutlineHeart className='mt-2.5 text-2xl' onClick={() => addToWishList(relatedProduct.id)  } />
+            }
               </div>
               <Link href={`/productDecp/${relatedProduct.id}`} className='hover:underline'>
                 <div className='aspect-w-3 aspect-h-4'>
