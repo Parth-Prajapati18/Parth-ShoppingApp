@@ -61,7 +61,7 @@ const LoginForm = () => {
         </button>
         <div className='flex justify-center items-center py-3'>
           <p className='px-2 text-slate-500'>Dont have an account?</p>
-          <Link className='px-1 text-lg text-slate-800 hover:underline' href={'/'}>Sign Up</Link>
+          <Link className='px-1 text-lg text-slate-800 hover:underline' href={'/signup'}>Sign Up</Link>
         </div>
       </Form>
     </Formik>

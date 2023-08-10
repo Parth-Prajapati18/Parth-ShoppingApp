@@ -2,10 +2,13 @@
 import Image from "next/image"
 import { CgProfile, CgHeart, CgSearch, CgShoppingCart, CgLogIn, CgUserAdd } from "react-icons/cg"
 import { RxHamburgerMenu } from "react-icons/rx"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
 import Link from 'next/link'
+import { globalContext } from "@/app/globals/context"
 
 function Navbar() {
+
+    const { userLogin, setIsLogin } = useContext(globalContext);
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -79,7 +82,7 @@ function Navbar() {
                     <div className="h-px bg-gray-100 w-full"></div>
                     <button className="w-full hover:text-teal-500 text-primary" href="/cart">Cart</button>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    
+
                     <button className="w-full hover:text-teal-500 text-primary" href="/">Contact Us</button>
                     <div className="h-px bg-gray-100 w-full"></div>
                 </div>
@@ -95,10 +98,10 @@ function Navbar() {
                     <Link className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
                         href="/">Home</Link>
 
-                    <Link  className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
+                    <Link className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
                         href="/shop">Shop</Link>
 
-                    <Link  className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
+                    <Link className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
                         href="/">Consultation</Link>
                 </div>
                 {/* Left side Three Links - End */}
@@ -120,22 +123,30 @@ function Navbar() {
                             <CgProfile className="text-3xl md:text-2xl" />
                         </button>
                         {isProfileDropdownOpen && (
-                            <div ref={profileDropdownRef} className="absolute md:mt-2 -left-20 grid grid-rows-2 bg-white drop-shadow-2xl px-3 py-1">
-                                <button className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1">
-                                    <span className="mr-16">Sign In</span>
-                                    <CgLogIn className="text-2xl" />
-                                </button>
-                                <button className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1">
-                                    <span className="mr-14">Sign Up</span>
-                                    <CgUserAdd className="text-2xl" />
-                                </button>
-                            </div>
+                            userLogin ?
+                                <div className="absolute md:mt-2 -left-20 bg-white drop-shadow-2xl px-3 py-1">
+                                    <button className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1" onClick={() => setIsLogin(false)}>
+                                        <span className="mr-16">Log Out</span>
+                                        <CgLogIn className="text-2xl" />
+                                    </button>
+                                </div>
+                                :
+                                <div ref={profileDropdownRef} className="absolute md:mt-2 -left-20 grid grid-rows-2 bg-white drop-shadow-2xl px-3 py-1">
+                                    <Link href={'/login'} className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1">
+                                        <span className="mr-16">Sign In</span>
+                                        <CgLogIn className="text-2xl" />
+                                    </Link>
+                                    <Link href={'/signup'} className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1">
+                                        <span className="mr-14">Sign Up</span>
+                                        <CgUserAdd className="text-2xl" />
+                                    </Link>
+                                </div>
                         )}
                     </div>
 
-                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist" href="/wishlist"><CgHeart /></Link>
-                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="CgSearch" href="/"><CgSearch /></Link>
-                    <Link  className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist"href="/cart"><CgShoppingCart /></Link>
+                    <Link className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist" href="/wishlist"><CgHeart /></Link>
+                    <Link className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="CgSearch" href="/"><CgSearch /></Link>
+                    <Link className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors text-3xl md:text-2xl" title="Wishlist" href="/cart"><CgShoppingCart /></Link>
                 </div>
             </div>
 
