@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
-import React, { useState, useContext  } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import { AiOutlineDown, AiOutlineUp, AiOutlineSearch, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import products from './data'
 import Link from 'next/link';
@@ -13,6 +13,10 @@ export default function Shop() {
   const [isOpenComp, setIsOpenComp] = useState(false);
   const [isOpenColor, setIsOpenColor] = useState(false);
   const [isOpenMate, setIsOpenMate] = useState(false);
+
+  const colorDropdownRef = useRef(null);
+  const materialDropdownRef = useRef(null);
+  const companyDropdownRef = useRef(null);
 
   const [sortOrder, setSortOrder] = useState('asc');
   const [selectedComapany, setSelectedComapny] = useState([]);
@@ -71,7 +75,42 @@ export default function Shop() {
     }
   });
 
-  console.log({wishList})
+  //Handle outside click to close dropdown checkbox
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        colorDropdownRef.current &&
+        !colorDropdownRef.current.contains(event.target) &&
+        !event.target.classList.contains('color-dropdown-trigger')
+      ) {
+        setIsOpenColor(false);
+      }
+      if (
+        materialDropdownRef.current &&
+        !materialDropdownRef.current.contains(event.target) &&
+        !event.target.classList.contains('material-dropdown-trigger')
+      ) {
+        setIsOpenMate(false);
+      }
+      if (
+        companyDropdownRef.current &&
+        !companyDropdownRef.current.contains(event.target) &&
+        !event.target.classList.contains('company-dropdown-trigger')
+      ) {
+        setIsOpenComp(false);
+      }
+    };
+
+    window.addEventListener('mousedown', handleOutsideClick);
+    window.addEventListener('onscroll', handleOutsideClick);
+
+    return () => {
+      window.removeEventListener('mousedown', handleOutsideClick);
+      window.removeEventListener('onscroll', handleOutsideClick);
+
+    };
+  }, []);
+
 
   return (
     <div>
@@ -103,7 +142,7 @@ export default function Shop() {
 
           {/* Dropdown checkbox for Color */}
           <div>
-          <div className={`relative cursor-pointer flex items-center border py-1 px-4 ${selectedColor.length > 1 ? 'gap-3' : 'gap-10'}`} onClick={() => setIsOpenColor(!isOpenColor)}>
+          <div ref={colorDropdownRef} className={`relative cursor-pointer flex items-center border py-1 px-4 ${selectedColor.length > 1 ? 'gap-3' : 'gap-10'}`} onClick={() => setIsOpenColor(!isOpenColor)}>
             <div className="flex gap-5">
               {selectedColor.length === 0 ? 'Colors' : (
                 <>
@@ -117,7 +156,7 @@ export default function Shop() {
             {isOpenColor ? <AiOutlineUp /> : <AiOutlineDown />}
           </div>
           {/* Drop down for Color */}
-          <div className='absolute bg-white border z-20'>
+          <div ref={colorDropdownRef} className='absolute bg-white border z-20 mt-1'>
             {isOpenColor && uniqueColor.map((item) => (
               <label key={item} className='block py-1 px-5 cursor-pointer'>
                 <input
@@ -126,7 +165,7 @@ export default function Shop() {
                   checked={selectedColor.includes(item)}
                   onChange={() => handleColorFilterChange(item)}
                 />
-                <span className='text-sm'>{item}</span>
+                <span className='text-sm w-full'>{item}</span>
               </label>
             ))}
           </div>
@@ -134,7 +173,7 @@ export default function Shop() {
 
           {/* Dropdown checkbox for Material */}
           <div>
-          <div className={`relative cursor-pointer flex items-center border py-1 px-4 ${selectedMaterial.length > 1 ? 'gap-3' : 'gap-10'}`} onClick={() => setIsOpenMate(!isOpenMate)}>
+          <div ref={materialDropdownRef} className={`relative cursor-pointer flex items-center border py-1 px-4 ${selectedMaterial.length > 1 ? 'gap-3' : 'gap-10'}`} onClick={() => setIsOpenMate(!isOpenMate)}>
             <div className="flex gap-5">
               {selectedMaterial.length === 0 ? 'Materials' : (
                 <>
@@ -148,7 +187,7 @@ export default function Shop() {
             {isOpenMate ? <AiOutlineUp /> : <AiOutlineDown />}
           </div>
           {/* Drop down for Material */}
-          <div className='absolute bg-white border z-20'>
+          <div ref={materialDropdownRef} className='absolute bg-white border z-20 mt-1'>
             {isOpenMate && uniqueMaterial.map((item) => (
               <label key={item} className='block py-1 px-5 cursor-pointer'>
                 <input
@@ -166,7 +205,7 @@ export default function Shop() {
 
           {/* Dropdown checkbox  START*/}
           <div>
-          <div className={`relative cursor-pointer flex items-center border py-1 px-4 ${selectedComapany.length > 1 ? 'gap-3' : 'gap-10'}`} onClick={() => setIsOpenComp(!isOpenComp)}>
+          <div ref={companyDropdownRef} className={`relative cursor-pointer flex items-center border py-1 px-4 ${selectedComapany.length > 1 ? 'gap-3' : 'gap-10'}`} onClick={() => setIsOpenComp(!isOpenComp)}>
             <div className="flex gap-5">
               {selectedComapany.length === 0 ? 'Brands' : (
                 <>
@@ -180,7 +219,7 @@ export default function Shop() {
             {isOpenComp ? <AiOutlineUp /> : <AiOutlineDown />}
           </div>
           {/* Drop down*/}
-          <div className='absolute bg-white border z-20'>
+          <div ref={companyDropdownRef} className='absolute bg-white border z-20 mt-1'>
             {isOpenComp && uniqueCompanies.map((item) => (
               <label key={item} className='block py-1 px-5 cursor-pointer'>
                 <input
