@@ -7,7 +7,7 @@ export const globalContext = createContext();
 
 export function ContextProvider({ children }) {
     const [isLogIn, setIsLogin] = useState(false);
-    const [cartAry, setCartAry] = useState([]);
+    const [cartAry, setCartAry] = useState([1]);
     const [wishList, setWhishList] = useState([]);
 
     const userLogin = useMemo(() => isLogIn, [isLogIn]);

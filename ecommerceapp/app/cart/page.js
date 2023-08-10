@@ -3,13 +3,16 @@
 'use client'
 import { globalContext } from '@/app/globals/context';
 import products from '../shop/data';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Link from 'next/link';
 import { AiOutlineHeart, AiFillHeart, AiOutlineArrowRight } from 'react-icons/ai';
-
+import { LiaLongArrowAltRightSolid } from 'react-icons/lia'
+import { useRouter } from 'next/navigation';
 
 function cart() {
-    const { wishList, addToWishList, removeToWishList, removeToCart, cartAry, removeAllCart } = useContext(globalContext);
+
+    const { wishList, addToWishList, removeToWishList, removeToCart, cartAry, userLogin } = useContext(globalContext);
+    const { push } = useRouter();
 
     if (cartAry.length === 0) {
         return (
@@ -73,10 +76,12 @@ function cart() {
     };
 
     const placeOrder = () => {
-        // Implement your logic to place an order
-        console.log('Placing order...');
+        if (userLogin) {
+            push('/order')
+        } else {
+            push('/login')
+        }
     };
-
 
     return (
         <div className='px-4 md:px-16 mt-8'>
@@ -85,26 +90,27 @@ function cart() {
                 {cartAry.map(cartItem => {
                     const product = products.find(p => p.id === cartItem);
                     return (
+
                         <div key={product.id} className='border p-4'>
                             <div className='flex justify-between items-center'>
-                                <div className='flex items-center'>
-                                    <img
-                                        src='/assets/jewellery.jpeg'
-                                        alt='Img 1'
-                                        className='object-cover w-16 h-16 mr-4'
-                                    />
-                                    <h3 className='font-semibold'>{product.productName}</h3>
-                                </div>
+                                <Link href={`/productDecp/${product.id}`}>
+                                    <div className='flex items-center'>
+                                        <img
+                                            src='/assets/jewellery.jpeg'
+                                            alt='Img 1'
+                                            className='object-cover w-16 h-16 mr-4'
+                                        />
+                                        <h3 className='font-semibold'>{product.productName}</h3>
+                                    </div>
+                                </Link>
                                 <button
                                     className='mt-2.5 text-2xl'
-                                    onClick={() => removeToCart(cartItem.id)}
+                                    onClick={() => removeToCart(product.id)}
                                 >
                                     Remove
                                 </button>
                             </div>
                             <p className='text-gray-600 py-1'>Price: ${product.price}</p>
-                            {/* Display other cart item details like quantity */}
-                            {/* ... */}
                         </div>
                     );
                 })}
@@ -112,28 +118,36 @@ function cart() {
             <div className='mt-6'>
                 <div className='flex justify-between'>
                     <p className='font-semibold'>Subtotal:</p>
-                    <p>${calculateTotal().toFixed(2)}</p>
+                    <p className='pr-2'>${calculateTotal().toFixed(2)}</p>
                 </div>
                 <div className='flex justify-between'>
                     <p className='font-semibold'>Tax (13%):</p>
-                    <p>${calculateTax(calculateTotal()).toFixed(2)}</p>
+                    <p className='pr-2'>${calculateTax(calculateTotal()).toFixed(2)}</p>
                 </div>
+                <hr className='my-1'></hr>
                 <div className='flex justify-between mt-2'>
                     <p className='font-semibold'>Total:</p>
-                    <p>${(calculateTotal() + calculateTax(calculateTotal())).toFixed(2)}</p>
+                    <p className='pr-2'>${(calculateTotal() + calculateTax(calculateTotal())).toFixed(2)}</p>
                 </div>
-                <button
-                    className='mt-6 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600'
-                    onClick={placeOrder}
-                >
-                    Place Order
-                </button>
+
+                <div className='flex justify-between w-full mt-4'>
+
+                    <div className='flex items-center justify-left  mt-4'>
+                        <Link href='/shop' className='text-lg md:text-xl xl:text-2xl hover:scale-110 flex flex-row items-center'>
+                            Continue Shopping <LiaLongArrowAltRightSolid className='ml-1 text-3xl' />
+                        </Link>
+                    </div>
+
+                    <button
+                        className='mt-6 bg-black text-white py-2 px-2 md:px-3 xl:px-4 '
+                        onClick={placeOrder}
+                    >
+                        Place Order
+                    </button>
+
+                </div>
             </div>
-            <div className='flex items-center justify-left px-16 mt-4'>
-                <Link href='/shop' className='text-2xl hover:text-blue-700 hover:scale-110 flex flex-row'>
-                    Continue Shopping <AiOutlineArrowRight />
-                </Link>
-            </div>
+
         </div>
     );
 }
