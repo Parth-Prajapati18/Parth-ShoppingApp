@@ -2,22 +2,22 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import axios from 'axios';
 
 const SignUpForm = () => {
+
   const initialValues = {
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    address: {
-      aptName: '',
-      streetName: '',
-      city: '',
-      province: '',
-      country: '',
-      postalCode: '',
-    },
+    aptName: '',
+    streetName: '',
+    city: '',
+    province: '',
+    country: '',
+    postalCode: '',
     mobileNumber: '',
     acceptTerms: false,
   };
@@ -36,23 +36,26 @@ const SignUpForm = () => {
     confirmPassword: Yup.string()
       .required('Required')
       .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-    address: Yup.object().shape({
-      aptNumber: Yup.string().required('Required'),
-      streetName: Yup.string().required('Required'),
-      city: Yup.string().required('Required'),
-      province: Yup.string().required('Required'),
-      country: Yup.string().required('Required'),
-      postalCode: Yup.string().required('Required'),
-      acceptTerms: Yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
-    }),
+    aptName: Yup.string().required('Required'),
+    streetName: Yup.string().required('Required'),
+    city: Yup.string().required('Required'),
+    province: Yup.string().required('Required'),
+    country: Yup.string().required('Required'),
+    postalCode: Yup.string().required('Required'),
+    acceptTerms: Yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
     mobileNumber: Yup.string(),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+
+  const handleSubmit = async (values, actions) => {
+    try {
+      const response = await axios.post('/api/signup', values);
+      alert(response.data.Message);
+      actions.resetForm();
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred. Please try again later.');
+    }
   };
 
   return (
@@ -118,21 +121,50 @@ const SignUpForm = () => {
         </div>
         {/* Email and Mobile number End */}
 
+        {/* Password Start */}
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label htmlFor="password" className="block text-black font-semibold mb-2">
+              Password
+            </label>
+            <Field
+              type="text"
+              id="password"
+              name="password"
+              className="w-full p-2 border"
+            />
+            <ErrorMessage name="password" component="p" className="text-red-500" />
+          </div>
+          <div>
+            <label htmlFor="confirmPassword" className="block text-black font-semibold mb-2">
+              Confirm Password
+            </label>
+            <Field
+              type="text"
+              id="confirmPassword"
+              name="confirmPassword"
+              className="w-full p-2 border"
+            />
+            <ErrorMessage name="confirmPassword" component="p" className="text-red-500" />
+          </div>
+        </div>
+        {/* Password End */}
+
         {/* Address fields Start*/}
 
         {/* StreeNamen and Number  */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label htmlFor="aptNumber" className="block text-black font-semibold mb-2">
+            <label htmlFor="aptName" className="block text-black font-semibold mb-2">
               Apt/Street No.
             </label>
             <Field
               type="text"
-              id="aptNumber"
-              name="aptNumber"
+              id="aptName"
+              name="aptName"
               className="w-full p-2 border"
             />
-            <ErrorMessage name="aptNumber" component="p" className="text-red-500" />
+            <ErrorMessage name="aptName" component="p" className="text-red-500" />
           </div>
           <div>
             <label htmlFor="streetName" className="block text-black font-semibold mb-2">
@@ -236,6 +268,7 @@ const SignUpForm = () => {
         <button
           type="submit"
           className="w-full bg-black text-white py-2 rounded hover:bg-gray-900"
+          onClick={handleSubmit}
         >
           Sign Up
         </button>

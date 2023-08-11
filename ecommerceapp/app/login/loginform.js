@@ -1,8 +1,10 @@
-"use client"
+"use strict";  // Use strict mode
+
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
+import axios from 'axios';
 
 const LoginForm = () => {
   const initialValues = {
@@ -15,11 +17,13 @@ const LoginForm = () => {
     password: Yup.string().required('Required'),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 10);
+  const handleSubmit = async (values) => {
+    try {
+      const response = await axios.post('/api/login', values);
+      alert(response.data.Message); 
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
   };
 
   return (
@@ -61,7 +65,9 @@ const LoginForm = () => {
         </button>
         <div className='flex justify-center items-center py-3'>
           <p className='px-2 text-slate-500'>Dont have an account?</p>
-          <Link className='px-1 text-lg text-slate-800 hover:underline' href={'/signup'}>Sign Up</Link>
+          <Link href="/signup" className='px-1 text-lg text-slate-800 hover:underline'>
+            Sign Up
+          </Link>
         </div>
       </Form>
     </Formik>
