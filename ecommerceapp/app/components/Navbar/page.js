@@ -8,7 +8,7 @@ import { globalContext } from "@/app/globals/context"
 
 function Navbar() {
 
-    const { userLogin, setIsLogin } = useContext(globalContext);
+    const { userLogin, setIsLogin, setUserObj, user } = useContext(globalContext);
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -119,24 +119,25 @@ function Navbar() {
             <div className="relative grid place-items-center">
                 <div className="relative flex items-center justify-end space-x-4 lg:space-x-8">
                     <div>
-                        <button className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors relative" onClick={toggleProfileDropdown}>
+                        <button className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors relative flex justify-center gap-1 items-center" onClick={toggleProfileDropdown}>
                             <CgProfile className="text-3xl md:text-2xl" />
+                            { userLogin && <span className="font-normal">Hi, {user.firstName}</span>}
                         </button>
                         {isProfileDropdownOpen && (
                             userLogin ?
                                 <div className="absolute md:mt-2 -left-20 bg-white drop-shadow-2xl px-3 py-1">
-                                    <button className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1" onClick={() => setIsLogin(false)}>
+                                    <button className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1" onClick={() => { setIsLogin(false); setUserObj([]); setIsProfileDropdownOpen(false);}}>
                                         <span className="mr-16">Log Out</span>
                                         <CgLogIn className="text-2xl" />
                                     </button>
                                 </div>
                                 :
                                 <div ref={profileDropdownRef} className="absolute md:mt-2 -left-20 grid grid-rows-2 bg-white drop-shadow-2xl px-3 py-1">
-                                    <Link href={'/login'} className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1">
+                                    <Link href={'/login'} className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1" onClick={()=>setIsProfileDropdownOpen(false)}>
                                         <span className="mr-16">Sign In</span>
                                         <CgLogIn className="text-2xl" />
                                     </Link>
-                                    <Link href={'/signup'} className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1">
+                                    <Link href={'/signup'} className="hover:bg-slate-100 hover:text-teal-500 flex items-center justify-end px-2 py-1" onClick={()=>setIsProfileDropdownOpen(false)}>
                                         <span className="mr-14">Sign Up</span>
                                         <CgUserAdd className="text-2xl" />
                                     </Link>

@@ -9,6 +9,7 @@ export function ContextProvider({ children }) {
     const [isLogIn, setIsLogin] = useState(true);
     const [cartAry, setCartAry] = useState([1]);
     const [wishList, setWhishList] = useState([]);
+    const [ user, setUser ] = useState({});
 
     const userLogin = useMemo(() => isLogIn, [isLogIn]);
 
@@ -36,6 +37,10 @@ export function ContextProvider({ children }) {
         setWhishList([]);
     }
 
+    function setUserObj(obj) {
+        setUser(obj)
+    }
+
     return (
         <globalContext.Provider
             value={{
@@ -48,7 +53,9 @@ export function ContextProvider({ children }) {
                 removeToWishList,
                 removeAllWishList,
                 wishList, 
-                cartAry
+                cartAry,
+                user,
+                setUserObj
             }}
         >
             {children}

@@ -1,11 +1,12 @@
 import { connection } from "./lib/data";
 import bcrypt from 'bcrypt';
+import jwt  from "jsonwebtoken";
 
 export default async function handler(req, res) {
   try {
     const { email, password } = req.body;
 
-    const [rows] = await connection.promise().query('SELECT password FROM `user_details` WHERE email = ?', [email]);
+    const [rows] = await connection.promise().query('SELECT * FROM `user_details` WHERE email = ?', [email]);
 
     if (rows.length === 0) {
       return res.status(401).json({ Message: "User not found" });
@@ -15,9 +16,10 @@ export default async function handler(req, res) {
     const result = await bcrypt.compare(password, hash);
 
     if (result) {
-      return res.status(200).json({ Message: "Login Works" });
+      const token = jwt.sign({user: rows[0]}, 'eyJSb2xlIjoiQWRta1ZXIiLCJVc2VybmFtZSI6W4iLCJJ3NIkphdmFJblVzZSIsImV4cCI6MTY5MTk0OD', { expiresIn: '1h' })
+      return res.status(200).json({Message: true, user: rows[0], token: token });
     } else {
-      return res.status(200).json({ Message: "Login doesn't work" });
+      return res.status(200).json({Message: false });
     }
   } catch (error) {
     console.error(error);

@@ -3,8 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
 
 const SignUpForm = () => {
+
+  const {push} = useRouter();
 
   const initialValues = {
     firstName: '',
@@ -51,6 +55,7 @@ const SignUpForm = () => {
     try {
       const response = await axios.post('/api/signup', values);
       alert(response.data.Message);
+      push('/login');
       actions.resetForm();
     } catch (error) {
       console.error(error);

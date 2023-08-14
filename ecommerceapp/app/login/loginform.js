@@ -1,16 +1,23 @@
 "use strict";  // Use strict mode
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { globalContext } from '@/app/globals/context';
 
 const LoginForm = () => {
+
   const initialValues = {
     email: '',
     password: '',
   };
+
+  const {setIsLogin, setUserObj, user} = useContext(globalContext);
+
+  const {push} = useRouter();
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Required'),
@@ -20,7 +27,14 @@ const LoginForm = () => {
   const handleSubmit = async (values) => {
     try {
       const response = await axios.post('/api/login', values);
-      alert(response.data.Message); 
+      setIsLogin(response.data.Message);
+      if (response.data.Message) {
+        setUserObj(response.data.user)
+        console.log(response)
+        push('/')
+      } else {
+        alert("Wrong Logins");
+      }
     } catch (error) {
       console.error('An error occurred:', error);
     }
