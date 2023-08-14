@@ -1,0 +1,14 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/cart/page": "/cart",
+  "/login/page": "/login",
+  "/order/page": "/order",
+  "/productDecp/page": "/productDecp",
+  "/shop/page": "/shop",
+  "/signup/page": "/signup",
+  "/wishlist/page": "/wishlist",
+  "/components/Navbar/page": "/components/Navbar",
+  "/components/Trending/page": "/components/Trending",
+  "/productDecp/[productId]/page": "/productDecp/[productId]"
+}

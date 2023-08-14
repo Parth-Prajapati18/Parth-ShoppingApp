@@ -6,7 +6,7 @@ import React, { useMemo, useState, createContext } from 'react'
 export const globalContext = createContext();
 
 export function ContextProvider({ children }) {
-    const [isLogIn, setIsLogin] = useState(true);
+    const [isLogIn, setIsLogin] = useState(false);
     const [cartAry, setCartAry] = useState([1]);
     const [wishList, setWhishList] = useState([]);
     const [ user, setUser ] = useState({});
