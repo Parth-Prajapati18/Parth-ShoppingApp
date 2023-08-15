@@ -2,10 +2,9 @@
 "use client"
 import React, { useState, useContext, useRef, useEffect } from 'react'
 import { AiOutlineDown, AiOutlineUp, AiOutlineSearch, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import products from './data'
 import Link from 'next/link';
 import {globalContext} from '@/app/globals/context.js' 
-
+import products from './data';
 
 export default function Shop() {
 

@@ -1,9 +1,9 @@
+"use client"
 import Link from "next/link"
 import Image from "next/image"
 import Trending from "./components/Trending/page"
-import axios from "axios"
 
-async function Home() {
+function Home() {
   return (
     <div>
     <div className="flex flex-col-reverse md:flex-row items-center justify-center h-auto overflow-hidden" style={{ backgroundColor: '#e2e9e9' }}>
