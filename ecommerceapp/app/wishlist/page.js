@@ -1,14 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import React from 'react'
-import products from '../shop/data'
 import { useContext } from 'react'
 import { globalContext } from '../globals/context'
 import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 import Link from 'next/link'
 
 export default function WishList() {
-    const {wishList, addToWishList, removeToWishList} = useContext(globalContext);
+    const {wishList, addToWishList, removeToWishList, products} = useContext(globalContext);
 
   return (
     <div>

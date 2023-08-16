@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
-'use client'
+"use client"
 import { globalContext } from '@/app/globals/context';
-import products from '../shop/data';
-import { useContext, useEffect } from 'react';
+import { useContext} from 'react';
 import Link from 'next/link';
 import { AiOutlineHeart, AiFillHeart, AiOutlineArrowRight } from 'react-icons/ai';
 import { LiaLongArrowAltRightSolid } from 'react-icons/lia'
@@ -11,10 +10,10 @@ import { useRouter } from 'next/navigation';
 
 function cart() {
 
-    const { wishList, addToWishList, removeToWishList, removeToCart, cartAry, userLogin } = useContext(globalContext);
+    const { wishList, addToWishList, removeToWishList, removeToCart, cartProducts , userLogin, products } = useContext(globalContext);
     const { push } = useRouter();
 
-    if (cartAry.length === 0) {
+    if (cartProducts.length === 0) {
         return (
             <div>
                 <h2 className='my-3 mx-1 md:mt-8 md:mb-3 text-lg md:text-3xl font-medium uppercase text-center font-mono overflow-hidden'>
@@ -63,8 +62,7 @@ function cart() {
 
     const calculateTotal = () => {
         let total = 0;
-        cartAry.forEach(cartItem => {
-            const product = products.find(p => p.id === cartItem);
+        cartProducts.forEach(product => {
             total += product.price;
         });
         return total;
@@ -87,10 +85,8 @@ function cart() {
         <div className='px-4 md:px-16 mt-8'>
             <h2 className='text-2xl md:text-3xl font-semibold mb-1 mt-2'>Your Cart</h2>
             <div className='grid md:grid-cols-1 mt-4 gap-4'>
-                {cartAry.map(cartItem => {
-                    const product = products.find(p => p.id === cartItem);
+                {cartProducts.map(product => {
                     return (
-
                         <div key={product.id} className='border p-4'>
                             <div className='flex justify-between items-center'>
                                 <Link href={`/productDecp/${product.id}`}>

@@ -4,11 +4,11 @@ import React, { useState, useContext, useRef, useEffect } from 'react'
 import { AiOutlineDown, AiOutlineUp, AiOutlineSearch, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Link from 'next/link';
 import {globalContext} from '@/app/globals/context.js' 
-import products from './data';
+
 
 export default function Shop() {
 
-  const { wishList, addToWishList, removeToWishList } = useContext(globalContext);
+  const { wishList, addToWishList, removeToWishList, products } = useContext(globalContext);
   const [isOpenComp, setIsOpenComp] = useState(false);
   const [isOpenColor, setIsOpenColor] = useState(false);
   const [isOpenMate, setIsOpenMate] = useState(false);
