@@ -16,7 +16,7 @@ const ProductDetail = ({ params }) => {
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [selectedImage, setSelectedImage] = useState(product.additionalImages[0]);
+  const [selectedImage, setSelectedImage] = useState(product.additionalImages.split(",")[0]);
 
   return (
     <div>
@@ -25,20 +25,20 @@ const ProductDetail = ({ params }) => {
       <div className='flex flex-col lg:flex-row space-y-4 md:space-y-0 md:space-x-4 md:ml-24 lg:gap-10 mx-4 md:mx-16'>
 
         <div className='grid grid-cols-4 md:grid-cols-8 lg:grid-cols-2 gap-1 h-1/4 mx-8 md:mx-1'>
-          {JSON.parse(product.additionalImages).map((imgsrc, index) => (
+          {product.additionalImages.split(",").map((imgsrc, index) => (
             <div
               key={index}
               className={`w-full h-auto ${selectedImage === imgsrc ? 'border-black border-2' : 'border'}`}
               onClick={() => setSelectedImage(imgsrc)}
             >
-              <Image src={imgsrc} alt={product.productName} width={120} height={100} />
+              <Image src={imgsrc.trim()} alt={product.productName} width={120} height={100} />
             </div>
           ))}
         </div>
 
         <div className='md:flex-1 flex items-center justify-center'>
           <Image
-            src={selectedImage}
+            src={selectedImage.trim()}
             alt={product.productName}
             width={600}
             height={550}

@@ -63,7 +63,7 @@ function cart() {
     const calculateTotal = () => {
         let total = 0;
         cartProducts.forEach(product => {
-            total += product.price;
+            total += Number(product.price);
         });
         return total;
     };
@@ -80,6 +80,8 @@ function cart() {
             push('/login')
         }
     };
+
+    {console.log(cartProducts)}
 
     return (
         <div className='px-4 md:px-16 mt-8'>

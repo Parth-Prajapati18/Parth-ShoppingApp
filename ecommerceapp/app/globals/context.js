@@ -10,8 +10,8 @@ export function ContextProvider({ children }) {
     const [cartAry, setCartAry] = useState([1]);
     const [wishList, setWhishList] = useState([]);
     const [products, setProducts] = useState([]);
-    const [ user, setUser ] = useState({});
-    const [ cartProducts, setCartProducts] = useState([]);
+    const [user, setUser] = useState({});
+    const [cartProducts, setCartProducts] = useState([]);
 
     const userLogin = useMemo(() => isLogIn, [isLogIn]);
 
@@ -43,11 +43,11 @@ export function ContextProvider({ children }) {
         setUser(obj)
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('/api/products');
-                if (response.status === 200){
+                if (response.status === 200) {
                     setProducts(response.data.Products)
                 }
             } catch (error) {
@@ -57,18 +57,23 @@ export function ContextProvider({ children }) {
         fetchData();
     }, []);
 
-    async function fetchCartProducts() {
-        const cartProducts = await Promise.all(cartAry.map(async (cartItem) => {
-            const product = products.find(p => p.id === cartItem);
-            return product;
-        }));
-        setCartProducts(cartProducts);
-    }
 
     useEffect(() => {
-        fetchCartProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        try {
+            const fetchCartProducts = async () => {
+                const fetchedProducts = await Promise.all(cartAry.map(async (item) => {
+                    const product = products.find(p => p.id === item);
+                    return product;
+                }));
+                setCartProducts(fetchedProducts.filter(product => product));
+            };
+            fetchCartProducts();
+        } catch (error) {
+            console.error(error);
+        }
     }, [cartAry, products]);
+    
+
 
     return (
         <globalContext.Provider
@@ -81,12 +86,12 @@ export function ContextProvider({ children }) {
                 addToWishList,
                 removeToWishList,
                 removeAllWishList,
-                wishList, 
+                wishList,
                 cartAry,
                 user,
                 setUserObj,
                 products,
-                cartProducts 
+                cartProducts
             }}
         >
             {children}
