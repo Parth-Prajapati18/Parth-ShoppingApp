@@ -1,54 +1,45 @@
-/* eslint-disable @next/next/no-img-element */
 "use client"
-import React, { useState, useEffect } from "react";
+import React from 'react';
+import { loadStripe } from '@stripe/stripe-js';
 
-const ProductDisplay = () => (
-  <section>
-    <div className="product">
-      <img
-        src="https://i.imgur.com/EHyR2nP.png"
-        alt="The cover of Stubborn Attachments"
-      />
-      <div className="description">
-      <h3>Stubborn Attachments</h3>
-      <h5>$20.00</h5>
-      </div>
-    </div>
-    <form action="/api/checkout" method="POST">
-      <button type="submit">
-        Checkout
-      </button>
-    </form>
-  </section>
-);
+const CheckoutButton = () => {
+    const handleCheckout = async () => {
+        try {
+            const response = await fetch('/api/checkout', { method: 'POST' });
+            const data = await response.json();
 
-const Message = ({ message }) => (
-  <section>
-    <p>{message}</p>
-  </section>
-);
+            if (!response) {
+              return <div>Loading....</div>
+            }
 
-export default function App() {
-  const [message, setMessage] = useState("");
+            if (response.ok) {
+                const stripe = await loadStripe('pk_test_51Nej9FHMBfPp3rU08qHjJhCy0JIZpCur5CrsZyvUTvNJQMm7YKPi4ssWyQCy8iN5UCEfnkc7FXG0eCvICQOqgZ2m00NUYf2KGy');
 
-  useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
+                const { error } = await stripe.redirectToCheckout({
+                    sessionId: data.sessionId
+                });
 
-    if (query.get("success")) {
-      setMessage("Order placed! You will receive an email confirmation.");
-    }
+                if (error) {
+                    console.error(error);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-    if (query.get("canceled")) {
-      setMessage(
-        "Order canceled -- continue to shop around and checkout when you're ready."
-      );
-    }
-  }, []);
+    return (
+        <button onClick={handleCheckout}>Checkout</button>
+    );
+};
 
-  return message ? (
-    <Message message={message} />
-  ) : (
-    <ProductDisplay />
-  );
-}
+const OrderPage = () => {
+    return (
+        <>
+            <h1>Order Page</h1>
+            <CheckoutButton />
+        </>
+    );
+};
+
+export default OrderPage;
