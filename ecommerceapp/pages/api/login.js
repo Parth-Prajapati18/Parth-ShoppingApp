@@ -17,12 +17,15 @@ export default async function handler(req, res) {
 
     if (result) {
       const token = jwt.sign({user: rows[0]}, 'eyJSb2xlIjoiQWRta1ZXIiLCJVc2VybmFtZSI6W4iLCJJ3NIkphdmFJblVzZSIsImV4cCI6MTY5MTk0OD', { expiresIn: '1h' })
+      connection.end()
       return res.status(200).json({Message: true, user: rows[0], token: token });
     } else {
+      connection.end()
       return res.status(200).json({Message: false });
     }
   } catch (error) {
     console.error(error);
+    connection.end()
     return res.status(500).json({ Message: "Internal Server Error" });
   }
 }

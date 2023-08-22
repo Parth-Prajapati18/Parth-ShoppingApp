@@ -1,4 +1,5 @@
 import Navbar from './components/Navbar/page'
+import Footer from './components/Footer/page'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { ContextProvider } from './globals/context'
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <ContextProvider>
         <Navbar />
         {children}
+        <Footer/>
         </ContextProvider>
       </body>
     </html>

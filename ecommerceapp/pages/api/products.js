@@ -5,9 +5,11 @@ export default async function handler(req, res) {
 
     try {
         const rows = await connection.promise().query(query);
+        connection.end()
         return res.status(200).json({ Message: "Okay", Products: rows[0] });
     } catch (error) {
         console.error(error);
+        connection.end()
         return res.status(500).json({ Message: "Internal Server Problem" });
     }
 }
