@@ -102,7 +102,7 @@ function Navbar() {
                         href="/shop">Shop</Link>
 
                     <Link className="text-sm w-full max-w-[80px] md:max-w-[128px] xl:max-w-[135px] uppercase hover:text-teal-500 xl:whitespace-nowrap text-primary"
-                        href="/">Consultation</Link>
+                        href="/consultation">Consultation</Link>
                 </div>
                 {/* Left side Three Links - End */}
             </div>
