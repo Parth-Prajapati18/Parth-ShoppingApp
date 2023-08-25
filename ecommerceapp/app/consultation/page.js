@@ -12,6 +12,8 @@ export default function consultation() {
 
   const [storeLocation, setStoreLocation] = useState(1);
   const [value, setValue] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [clickedTime, setClickedTime] = useState(null)
   const [selectedLocation, setSelectedLocation] = useState({
     id: 1,
     image: '/assets/VA-1',
@@ -21,6 +23,12 @@ export default function consultation() {
     mobile: '548.994.8271',
     timing: 'Thurs-Mon: 10am-7pm'
   });
+
+  const isWeekend = (date) => {
+    const day = date.day();
+    return day === 0 || day === 6;
+  };
+  
 
   const location = [
     {
@@ -177,22 +185,39 @@ export default function consultation() {
 
         {/* Section 3 */}
 
-        <div className='grid grid-cols-2 gap-4'>
+        <div className='grid grid-cols-2 gap-4 font-serif'>
 
           <div className='p-4 m-auto'>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateCalendar views={['day']} fixedWeekNumber={5} className='border' disablePast value={value} onChange={(newValue) => setValue(newValue)}/>
+              <DateCalendar views={['day']} fixedWeekNumber={5} className='border' disablePast value={value} onChange={(newValue) => setValue(newValue)} shouldDisableDate={isWeekend}/>
+              {console.log(value)}
             </LocalizationProvider>
           </div>
 
-          <div>
-            {console.log(value)}
+          <div className='p-4 m-auto '>
+
+          <p className='text-center text-xl'>Pick Time Slot</p> <br/> 
+          <div className=' grid grid-cols-3 gap-4'>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(1);}} value='0800'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 1 ? 'border-teal-500' : '' }`} >08:00 AM</button>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(2);}} value='0800'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 2 ? 'border-teal-500' : '' }`} >09:00 AM</button>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(3);}} value='0900'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 3 ? 'border-teal-500' : '' }`} >10:00 AM</button>  
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(4);}} value='1000'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 4 ? 'border-teal-500' : '' }`} >11:00 AM</button>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(5);}} value='1100'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 5 ? 'border-teal-500' : '' }`} >12:00 AM</button>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(6);}} value='1200'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 6 ? 'border-teal-500' : '' }`} >01:00 PM</button>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(7);}} value='1300'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 7 ? 'border-teal-500' : '' }`} >02:00 PM</button>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(8);}} value='1400'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 8 ? 'border-teal-500' : '' }`} >03:00 PM</button>
+              <button onClick={(e) => {setSelectedTime(e.target.value); setClickedTime(9);}} value='1500'  className={`border-2 p-2 hover:border-teal-500 ${clickedTime === 9 ? 'border-teal-500' : '' }`}>04:00 PM</button>
           </div>
-
+          {selectedTime===null ? null : <button className='text-xl pt-10 underline text-teal-500 hove:text-black float-right'>Next</button> }
+          </div>
         </div>
+        {/* Se ction 3 End*/}
 
+        {/* Section 4 Start */}
 
-        {/* Section 3 End*/}
+          
+
+        {/* Section 4 end */}
 
       </div>
 
