@@ -795,6 +795,15 @@ video {
 .h-screen {
   height: 100vh;
 }
+.h-\[372\] {
+  height: 372;
+}
+.h-\[372px\] {
+  height: 372px;
+}
+.h-\[278px\] {
+  height: 278px;
+}
 .max-h-0 {
   max-height: 0px;
 }
@@ -830,6 +839,9 @@ video {
 }
 .w-screen {
   width: 100vw;
+}
+.w-\[278px\] {
+  width: 278px;
 }
 .max-w-\[80px\] {
   max-width: 80px;
@@ -1032,6 +1044,12 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
+.bg-\[url\(\'\/assets\/appoint-bg\.jpg\'\)\] {
+  background-image: url('/assets/appoint-bg.jpg');
+}
+.bg-cover {
+  background-size: cover;
+}
 .fill-red-500 {
   fill: #ef4444;
 }
@@ -1050,6 +1068,9 @@ video {
 }
 .p-6 {
   padding: 1.5rem;
+}
+.p-3 {
+  padding: 0.75rem;
 }
 .px-1 {
   padding-left: 0.25rem;
@@ -1120,17 +1141,17 @@ video {
 .pr-2 {
   padding-right: 0.5rem;
 }
+.pt-10 {
+  padding-top: 2.5rem;
+}
 .pt-16 {
   padding-top: 4rem;
 }
 .pt-4 {
   padding-top: 1rem;
 }
-.pt-9 {
-  padding-top: 2.25rem;
-}
-.pt-10 {
-  padding-top: 2.5rem;
+.pb-1 {
+  padding-bottom: 0.25rem;
 }
 .text-left {
   text-align: left;
@@ -1250,13 +1271,13 @@ video {
   --tw-text-opacity: 1;
   color: rgb(30 41 59 / var(--tw-text-opacity));
 }
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
 .text-teal-500 {
   --tw-text-opacity: 1;
   color: rgb(20 184 166 / var(--tw-text-opacity));
+}
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
