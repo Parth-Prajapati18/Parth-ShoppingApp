@@ -1,4 +1,4 @@
-import { connection } from "./lib/data";
+import { pool } from "./lib/data";
 import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
@@ -14,12 +14,13 @@ export default async function handler(req, res) {
             const { firstName, lastName, email, password, aptName, streetName, city, province, country, postalCode, mobileNumber, acceptTerms } = req.body;
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const connection = await pool.getConnection();
 
-            await connection.promise().query(
+            await connection.query(
                 "INSERT INTO user_details (firstName, lastName, email, mobileNumber, password, aptName, streetName, city, province, country, postalCode, acceptTerm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 [firstName, lastName, email, mobileNumber, hashedPassword, aptName, streetName, city, province, country, postalCode, acceptTerms]
             );
-
+            connection.release();         
             return res.status(200).json({ Message: "POST Request Success" });
         } catch (error) {
             console.error(error);

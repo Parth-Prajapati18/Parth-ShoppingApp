@@ -31,7 +31,7 @@ const LoginForm = () => {
       if (response.data.Message) {
         setUserObj(response.data.user)
         console.log(response)
-        push('/')
+        push('/',{ scroll: true })
       } else {
         alert("Wrong Logins");
       }

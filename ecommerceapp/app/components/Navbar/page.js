@@ -18,16 +18,16 @@ function Navbar() {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-    const toggleProfileDropdown = () => {
-        setIsProfileDropdownOpen(!isProfileDropdownOpen);
 
-        // Disable scrolling when the profile dropdown is open
-        if (!isProfileDropdownOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
-    };
+    useEffect(() => {
+            // Disable scrolling when the profile dropdown is open
+            if (!isProfileDropdownOpen) {
+                document.body.style.overflow = "auto";
+            } else {
+                document.body.style.overflow = "hidden";
+            }
+    },[isProfileDropdownOpen])
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -119,7 +119,7 @@ function Navbar() {
             <div className="relative grid place-items-center">
                 <div className="relative flex items-center justify-end space-x-4 lg:space-x-8">
                     <div>
-                        <button className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors relative flex justify-center gap-1 items-center" onClick={toggleProfileDropdown}>
+                        <button className="text-black font-extralight hover:text-teal-500 duration-200 ease-in-out transition-colors relative flex justify-center gap-1 items-center" onClick={() =>setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
                             <CgProfile className="text-3xl md:text-2xl" />
                             { userLogin && <span className="font-normal">Hi, {user.firstName}</span>}
                         </button>
