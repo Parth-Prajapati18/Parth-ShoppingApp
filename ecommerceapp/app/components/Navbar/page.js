@@ -82,7 +82,7 @@ function Navbar() {
                     <div className="h-px bg-gray-100 w-full"></div>
                     <Link className="w-full hover:text-teal-500 text-primary" href="/cart" onClick={()=>setIsSidebarOpen(false)}>Cart</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <Link className="w-full hover:text-teal-500 text-primary" href="/" onClick={()=>setIsSidebarOpen(false)}>Contact Us</Link>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/" onClick={()=>setIsSidebarOpen(false)}git >Contact Us</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
                 </div>
 
