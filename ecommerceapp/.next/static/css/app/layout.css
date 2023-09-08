@@ -881,11 +881,11 @@ video {
 .grid-cols-5 {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
-.grid-rows-2 {
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-}
 .grid-rows-1 {
   grid-template-rows: repeat(1, minmax(0, 1fr));
+}
+.grid-rows-2 {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 .flex-row {
   flex-direction: row;
@@ -1135,17 +1135,14 @@ video {
 .pr-2 {
   padding-right: 0.5rem;
 }
-.pt-10 {
-  padding-top: 2.5rem;
-}
 .pt-16 {
   padding-top: 4rem;
 }
-.pt-4 {
-  padding-top: 1rem;
-}
 .pt-3 {
   padding-top: 0.75rem;
+}
+.pt-4 {
+  padding-top: 1rem;
 }
 .text-left {
   text-align: left;

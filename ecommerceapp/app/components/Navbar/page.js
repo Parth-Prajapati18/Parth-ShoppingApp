@@ -70,20 +70,19 @@ function Navbar() {
                 </button>
 
                 <div className="relative grid grid-rows-7 gap-2 text-lg top-20 px-[7%] font-base font-semibold tracking-[0.04em]">
-                    <button className="w-full hover:text-teal-500 text-primary" href="/">Home</button>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/" onClick={()=>setIsSidebarOpen(false)}>Home</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/shop">Shop</button>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/shop" onClick={()=>setIsSidebarOpen(false)}>Shop</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/">Consultation</button>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/consultation" onClick={()=>setIsSidebarOpen(false)}>Consultation</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/">Profile</button>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/" onClick={()=>setIsSidebarOpen(false)}>Profile</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/wishlist">Wishlist</button>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/wishlist" onClick={()=>setIsSidebarOpen(false)}>Wishlist</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
-                    <button className="w-full hover:text-teal-500 text-primary" href="/cart">Cart</button>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/cart" onClick={()=>setIsSidebarOpen(false)}>Cart</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
-
-                    <button className="w-full hover:text-teal-500 text-primary" href="/">Contact Us</button>
+                    <Link className="w-full hover:text-teal-500 text-primary" href="/" onClick={()=>setIsSidebarOpen(false)}>Contact Us</Link>
                     <div className="h-px bg-gray-100 w-full"></div>
                 </div>
 
