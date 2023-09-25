@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 import axios from 'axios';
+import productAry from '../shop/data'
 import React, { useMemo, useState, createContext, useEffect } from 'react'
 
 export const globalContext = createContext();
@@ -9,7 +10,7 @@ export function ContextProvider({ children }) {
     const [isLogIn, setIsLogin] = useState(false);
     const [cartAry, setCartAry] = useState([1]);
     const [wishList, setWhishList] = useState([]);
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(productAry);
     const [user, setUser] = useState({});
     const [cartProducts, setCartProducts] = useState([]);
 
@@ -43,19 +44,19 @@ export function ContextProvider({ children }) {
         setUser(obj)
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('/api/products');
-                if (response.status === 200) {
-                    setProducts(response.data.Products)
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await axios.get('/api/products');
+    //             if (response.status === 200) {
+    //                 setProducts(response.data.Products)
+    //             }
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
 
 
     useEffect(() => {

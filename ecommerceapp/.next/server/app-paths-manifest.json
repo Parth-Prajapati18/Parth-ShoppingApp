@@ -1,5 +1,9 @@
 {
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js",
-  "/consultation/page": "app/consultation/page.js"
+  "/cart/page": "app/cart/page.js",
+  "/shop/page": "app/shop/page.js",
+  "/login/page": "app/login/page.js",
+  "/order/page": "app/order/page.js",
+  "/productDecp/[productId]/page": "app/productDecp/[productId]/page.js"
 }

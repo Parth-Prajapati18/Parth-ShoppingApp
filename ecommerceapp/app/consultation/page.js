@@ -93,7 +93,7 @@ export default function consultation() {
     const formik = useFormik({
       initialValues,
       validationSchema,
-      onSubmit: async (values) => {
+      onSubmit: async (values, actions) => {
         const selected = location.find(loc => loc.id === storeLocation);
         const appObj = {
           ...values,
@@ -103,14 +103,15 @@ export default function consultation() {
           appTime: selectedTime
         }
         console.log('Form submitted with values:', appObj);
-
+ 
         try {
           await axios.post('/api/renderAppEmail', appObj);
           console.log('Email sent successfully');
+          actions.resetForm();
         } catch (error) {
           console.error('Error sending email:', error);
       }
-        actions.resetForm();
+        
       },
     });
 
